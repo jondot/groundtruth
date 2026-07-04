@@ -1,0 +1,9 @@
+{
+  "name": "@jondot/groundtruth-linux-arm64",
+  "version": "0.2.0",
+  "description": "groundtruth (gt) binary for linux arm64",
+  "license": "(MIT OR Apache-2.0)",
+  "repository": "github:jondot/groundtruth",
+  "os": ["linux"],
+  "cpu": ["arm64"]
+}

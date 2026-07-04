@@ -1,0 +1,63 @@
+[package]
+name = "groundtruth"
+version = "0.2.0"
+edition = "2024"
+description = "Single-binary database health monitor: SQL checks in HCL, Prometheus metrics, MCP server"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/jondot/groundtruth"
+homepage = "https://github.com/jondot/groundtruth"
+readme = "README.md"
+keywords = ["database", "monitoring", "observability", "sql", "healthcheck"]
+categories = ["command-line-utilities", "database"]
+authors = ["jondot"]
+
+# Binary is `gt`; library crate is `groundtruth`.
+[[bin]]
+name = "gt"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.102"
+statrs = "0.18"
+regex = "1"
+constant_time_eq = "0.3"
+chrono = "0.4.45"
+croner = "3.0.1"
+hcl-rs = "0.19.7"
+reqwest = { version = "0.13.4", features = ["json", "rustls"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.150"
+sqlx = { version = "0.8.6", default-features = false, features = ["runtime-tokio", "postgres", "sqlite", "chrono", "uuid", "rust_decimal", "json"] }
+rust_decimal = "1"
+base64 = "0.22"
+tokio = { version = "1.52.3", features = ["macros", "rt-multi-thread", "signal", "sync"] }
+clap = { version = "4.6.1", features = ["derive"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+axum = "0.8.9"
+serde_yaml_ng = "0.10"
+rmcp = { version = "1.7.0", features = ["server", "macros", "transport-io"] }
+# Broad multi-provider reads (MySQL, BigQuery, Trino; Redshift via the Postgres
+# wire). `fptr` is connectorx's default dispatch strategy, lost under
+# `default-features = false` — `branch`/`fptr` are mutually exclusive and exactly
+# one is required. connectorx's `src_sqlite` is intentionally omitted: it pulls a
+# `libsqlite3-sys` that collides with sqlx's on the native `sqlite3` link, and
+# SQLite is already served by the native sqlx path. `src_mssql` is omitted too:
+# it drags in tiberius' GSSAPI/Kerberos C dependency, which needs krb5 headers
+# to build and does not cross-compile cleanly to aarch64 Linux.
+connectorx = { version = "0.4.5", default-features = false, features = ["fptr", "dst_arrow", "src_postgres", "src_mysql", "src_trino", "src_bigquery"] }
+arrow = { version = "54", default-features = false, features = ["prettyprint"] }
+aws-config = { version = "1.8.18", features = ["credentials-login"] }
+aws-sdk-athena = "1.110.0"
+
+[dev-dependencies]
+tower = { version = "0.5", features = ["util"] }
+http-body-util = "0.1"
+
+# Do NOT set `panic = "abort"`: the evaluator relies on catch_unwind to survive
+# poison check expressions; abort would crash the daemon instead.
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

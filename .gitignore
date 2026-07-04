@@ -1,0 +1,16 @@
+/target
+*.db
+*.db-wal
+*.db-shm
+.DS_Store
+
+# website
+node_modules/
+website/node_modules/
+website/dist/
+website/.astro/
+.vercel/
+
+# agent/session scratch
+.claude/
+.superpowers/

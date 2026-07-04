@@ -1,0 +1,17 @@
+name: groundtruth
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # every 15 minutes (GitHub's minimum is 5)
+  workflow_dispatch:
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install gt
+        run: curl -fsSL https://raw.githubusercontent.com/jondot/groundtruth/main/install.sh | sh
+      - name: Run checks
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          HEARTBEAT_URL: ${{ secrets.HEARTBEAT_URL }}
+        run: gt run groundtruth.hcl

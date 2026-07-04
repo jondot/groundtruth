@@ -1,0 +1,18 @@
+{
+  "name": "@jondot/groundtruth",
+  "version": "0.2.0",
+  "description": "Single-binary database health monitor: SQL checks in HCL, Prometheus metrics, MCP server.",
+  "license": "(MIT OR Apache-2.0)",
+  "repository": "github:jondot/groundtruth",
+  "homepage": "https://github.com/jondot/groundtruth#readme",
+  "keywords": ["database", "monitoring", "observability", "sql", "healthcheck"],
+  "bin": {
+    "gt": "bin/gt"
+  },
+  "optionalDependencies": {
+    "@jondot/groundtruth-darwin-arm64": "0.2.0",
+    "@jondot/groundtruth-darwin-x64": "0.2.0",
+    "@jondot/groundtruth-linux-x64": "0.2.0",
+    "@jondot/groundtruth-linux-arm64": "0.2.0"
+  }
+}

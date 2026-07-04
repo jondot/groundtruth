@@ -1,0 +1,14 @@
+---
+// groundtruth logo mark: modular 2x2 grid of rounded squares.
+// Single source of truth — themes via --accent, so no light/dark variants needed.
+interface Props {
+  size?: number;
+}
+const { size = 26 } = Astro.props;
+---
+<svg class="logo" width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
+  <rect x="7" y="7" width="8" height="8" rx="2" fill="var(--accent)"></rect>
+  <rect x="17" y="7" width="8" height="8" rx="2" fill="var(--accent)" opacity="0.45"></rect>
+  <rect x="7" y="17" width="8" height="8" rx="2" fill="var(--accent)" opacity="0.45"></rect>
+  <rect x="17" y="17" width="8" height="8" rx="2" fill="var(--accent)"></rect>
+</svg>

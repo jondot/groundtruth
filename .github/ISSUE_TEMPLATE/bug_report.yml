@@ -1,0 +1,76 @@
+name: Bug report
+description: Something doesn't work the way it should.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug. **Do not include database credentials or
+        sensitive data** in the output you paste — redact any DSNs, passwords,
+        or API tokens. Security vulnerabilities belong in a private
+        [security advisory](https://github.com/jondot/groundtruth/security/advisories/new),
+        not this form.
+
+  - type: input
+    id: version
+    attributes:
+      label: groundtruth version
+      description: Output of `gt --version`.
+      placeholder: "gt 0.2.0"
+    validations:
+      required: true
+
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      description: macOS / Linux + version + arch
+      placeholder: "macOS 15.0 / arm64"
+    validations:
+      required: true
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Relevant `groundtruth.hcl` (redact DSNs / secrets)
+      description: The config section related to the bug. Replace real DSNs with placeholders.
+      render: hcl
+    validations:
+      required: false
+
+  - type: textarea
+    id: command
+    attributes:
+      label: Command you ran
+      description: Include any relevant env vars (redact values).
+      placeholder: "gt run groundtruth.hcl"
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened
+      description: Include `RUST_LOG=debug` output if you can. Redact any credentials.
+      render: shell
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I've redacted any credentials or sensitive data from the output above
+          required: true
+        - label: I've searched existing issues and this isn't a duplicate
+          required: false

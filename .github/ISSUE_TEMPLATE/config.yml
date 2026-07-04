@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/jondot/groundtruth/security/advisories/new
+    about: Security issues go through the private advisory flow, not a public issue.
+  - name: Usage question
+    url: https://github.com/jondot/groundtruth/discussions
+    about: "Open a discussion — questions belong there, not as issues."

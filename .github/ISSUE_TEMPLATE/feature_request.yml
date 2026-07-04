@@ -1,0 +1,40 @@
+name: Feature request
+description: Suggest a new capability or change.
+title: "[feat] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the suggestion. For big changes — new HCL syntax, new
+        database engines, new check types — consider opening a discussion
+        first so we can align on approach before anyone invests implementation
+        time.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to monitor or detect that groundtruth doesn't (or does poorly) today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What should groundtruth do? HCL config shape, new CLI flag, new check attribute, new engine, etc.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What did you try or think about first?
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Links to related issues, similar features in other tools, example queries, etc.

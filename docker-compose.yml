@@ -1,0 +1,24 @@
+# Minimal run-and-forget deployment. Bring your own database(s).
+#
+#   1. put your checks in ./groundtruth.hcl  (use env("...") for DSNs)
+#   2. set DATABASE_URL (and any alert webhook) in the environment
+#   3. docker compose up -d
+#
+# groundtruth exposes:  /healthz  /metrics  /checks  on :9090
+services:
+  groundtruth:
+    build: .
+    # or:  image: ghcr.io/you/groundtruth:latest
+    command: ["watch", "/etc/groundtruth/groundtruth.hcl", "--addr", "0.0.0.0:9090"]
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL}
+      ALERT_WEBHOOK: ${ALERT_WEBHOOK:-}
+    volumes:
+      - ./groundtruth.hcl:/etc/groundtruth/groundtruth.hcl:ro   # your checks (read-only)
+      - groundtruth-state:/var/lib/groundtruth            # history + sustained state
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+
+volumes:
+  groundtruth-state:

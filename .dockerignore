@@ -1,0 +1,6 @@
+target/
+*.db
+*.db-*
+.git/
+.gitignore
+*.log
